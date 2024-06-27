@@ -19,6 +19,7 @@ public class SecurityConfig {
                 .requestMatchers("/", "/login", "/sign-up", "/check-email","/check-email-token",
                         "/email-login", "/check-email-login", "/login-link").permitAll()
                 .requestMatchers(HttpMethod.GET, "/profile/*").permitAll()
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .anyRequest().authenticated()
 
         );
