@@ -21,7 +21,6 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/profile/*").permitAll()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .anyRequest().authenticated()
-
         );
         return http.build();
     }
