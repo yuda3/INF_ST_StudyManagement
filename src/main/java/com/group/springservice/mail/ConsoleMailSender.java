@@ -1,4 +1,4 @@
-package com.group.springservice;
+package com.group.springservice.mail;
 
 import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;
