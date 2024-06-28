@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class AccountController {
 
     private final SignUpFormValidator signUpFormValidator;
-    private final AccountRepository accountRepository;
-    private final JavaMailSender mailSender;
-
+    private final AccountService accountService;
 
     @InitBinder("signUpForm")
     public void initBinder(WebDataBinder binder){
@@ -38,24 +36,11 @@ public class AccountController {
         if (errors.hasErrors()) {
             return "account/sign-up";
         }
-
-        Account account = Account.builder()
-                .email(signUpForm.getEmail())
-                .nickname(signUpForm.getNickname())
-                .password(signUpForm.getPassword()) // TODO encoding
-                .emailVerified(false)
-                .studyCreatedByWeb(true)
-                .studyEnrollmentResultByWeb(true)
-                .studyCreatedByWeb(true)
-                .build();
-        Account newAccount = accountRepository.save(account);
-        newAccount.generateEmailToken();
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setSubject("Confirm Sign Up");
-        mailMessage.setTo("/check-email-token?token="+ newAccount.getEmailCheckToken() +"&email="+ newAccount.getEmail());
-        mailSender.send(mailMessage);
+        accountService.processNewAccount(signUpForm);
         return "redirect:/";
     }
+
+
 
 
 }

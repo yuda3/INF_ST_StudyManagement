@@ -50,9 +50,9 @@ class AccountControllerTest {
                 ).andExpect(status().isOk())
 
                 .andExpect(view().name("account/sign-up"))
-                .andDo(print())
-        ;
+                .andDo(print());
     }
+
     @Test
     void signUpSubmit_with_right_input() throws Exception {
         mockMvc.perform(post("/sign-up")
