@@ -16,6 +16,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.then;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -44,12 +46,13 @@ class AccountControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("error"))
                 .andExpect(view().name("account/checked-email"))
+                .andExpect(unauthenticated())
         ;
     }
 
     @DisplayName("メールトークンが存在しているか確認")
     @Test
-    void checkEmailToken_with_rignt_input()  throws Exception {
+    void checkEmailToken_with_right_input()  throws Exception {
         Account account = Account.builder()
                 .email("yuda3@hotmail.com")
                 .password("123456789")
@@ -76,6 +79,7 @@ class AccountControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("account/sign-up"))
                 .andExpect(model().attributeExists("signUpForm"))
+                .andExpect(unauthenticated())
         ;
     }
     @Test
@@ -88,6 +92,7 @@ class AccountControllerTest {
                 ).andExpect(status().isOk())
 
                 .andExpect(view().name("account/sign-up"))
+                .andExpect(unauthenticated())
                 .andDo(print());
     }
 
@@ -99,7 +104,8 @@ class AccountControllerTest {
                         .param("password", "kim1212399")
                         .with(csrf())
                 ).andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/"));
+                .andExpect(view().name("redirect:/"))
+            ;
         Account account = accountRepository.findByEmail("kim@gamil.com");
         assertNotNull(account);
         assertNotEquals(account.getPassword(), "kim1212399");
