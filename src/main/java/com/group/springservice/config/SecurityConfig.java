@@ -20,6 +20,7 @@ public class SecurityConfig {
                         "/email-login", "/check-email-login", "/login-link").permitAll()
                 .requestMatchers(HttpMethod.GET, "/profile/*").permitAll()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                .requestMatchers("/node_modules/**").permitAll()
                 .anyRequest().authenticated()
         );
         return http.build();
