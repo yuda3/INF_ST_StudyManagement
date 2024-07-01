@@ -5,19 +5,31 @@
     <meta charset="UTF-8">
     <title>SignUp</title>
     <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.css">
     <style>
         .container{
             max-width: 100%;
         }
+        .footer {
+            padding: 2rem;
+            font-size: 15px;
+            color: #999;
+            background: #fff;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .footer a:hover {
+            color: #000;
+        }
     </style>
 </head>
+
 
 <nav th:fragment="main-nav" class="navbar navbar-expand-sm navbar-dark bg-dark">
     <a class="navbar-brand" href="/" th:href="@{/}">
         <img src="/images/edited_image.png" width="67" height="75">
     </a>
-    <button class="navbar-toggler" tpe="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -31,17 +43,22 @@
         </ul>
 
         <ul class="navbar-nav justify-content-end">
-            <li class="nav-item" sec:authorize="isAuthenticated()">
-                <a class="nav-link" href="#" th:href="@{/login}">LOGIN</a>
+            <li class="nav-item" sec:authorize="!isAuthenticated()">
+                <a class="nav-link" th:href="@{/login}">로그인</a>
             </li>
             <li class="nav-item" sec:authorize="!isAuthenticated()">
-                <a class="nav-link" href="#" th:href="@{/sign-up}">SIGN UP</a>
+                <a class="nav-link" th:href="@{/sign-up}">가입</a>
             </li>
             <li class="nav-item" sec:authorize="isAuthenticated()">
-                <a class="nav-link" href="#" th:href="@{/notifications}">Notification</a>
+                <a class="nav-link" th:href="@{/notifications}">
+                    <i th:if="${!hasNotification}" class="fa fa-bell-o" aria-hidden="true"></i>
+                    <span class="text-info" th:if="${hasNotification}"><i class="fa fa-bell" aria-hidden="true"></i></span>
+                </a>
             </li>
             <li class="nav-item" sec:authorize="isAuthenticated()">
-                <a class="nav-link btn btn-outline-primary" href="#" th:href="@{/notifications}">Study</a>
+                <a class="nav-link btn btn-outline-primary" th:href="@{/new-study}">
+                    <i class="fa fa-plus" aria-hidden="true"></i> 스터디 개설
+                </a>
             </li>
             <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
@@ -55,12 +72,12 @@
                     <h6 class="dropdown-header">
                         <span sec:authentication="name">Username</span>
                     </h6>
-                    <a class="dropdown-item" th:href="@{'/profile/' + ${#authentication.name}}">Profile</a>
-                    <a class="dropdown-item" >Study</a>
+                    <a class="dropdown-item" th:href="@{'/profile/' + ${#authentication.name}}">프로필</a>
+                    <a class="dropdown-item" >스터디</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#" th:href="@{'/settings/profile'}">Setting</a>
+                    <a class="dropdown-item" href="#" th:href="@{'/settings/profile'}">설정</a>
                     <form class="form-inline my-2 my-lg-0" action="#" th:action="@{/logout}" method="post">
-                        <button class="dropdown-item" type="submit">LogOut</button>
+                        <button class="dropdown-item" type="submit">로그아웃</button>
                     </form>
                 </div>
             </li>
