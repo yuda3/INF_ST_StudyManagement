@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
 <head th:fragments="head">
     <meta charset="UTF-8">
     <title>SignUp</title>
     <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/style.css">
     <style>
         .container{
             max-width: 100%;
@@ -68,9 +68,8 @@
     </div>
 </nav>
 
-<footer th:fragment="footer">
-    <div class="row justify-content-center">
-        <img class="mb-2" src="/images/DALL·E.jpg" alt="" width="276">
-        <small class="d-block mb-3 text-muted">&copy; 2020</small>
+<footer th:fragment="footer" >
+    <div class="footer">
+        <small>&copy; 2020</small>
     </div>
 </footer>

@@ -21,6 +21,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/profile/*").permitAll()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .requestMatchers("/node_modules/**").permitAll()
+                .requestMatchers("/css/**").permitAll()
                 .anyRequest().authenticated()
         );
         return http.build();
